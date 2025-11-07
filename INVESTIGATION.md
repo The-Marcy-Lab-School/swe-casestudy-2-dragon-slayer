@@ -1,0 +1,101 @@
+# Application Investigation
+
+By answering these questions, you will be required to think critically about how the application is designed and understand WHY it is designed in this way. Your aim should be to:
+* learn as much as you can from this application so that you can build an application of your own that leverages these same skills
+* communicate clearly about the concepts you are using and the decisions you make for how you implement them.
+
+**Table of Contents**
+- [Investigation Questions](#investigation-questions)
+  - [Encapsulation with Closures \& Factory Functions](#encapsulation-with-closures--factory-functions)
+  - [Encapsulation with Classes](#encapsulation-with-classes)
+  - [Inheritance](#inheritance)
+  - [Polymorphism](#polymorphism)
+
+## Investigation Questions
+
+Mod 2 Topics:
+* OOP Pillars
+  * Encapsulation
+  * Abstraction
+  * Inheritance
+  * Polymorphism
+* Closures
+* `class` constructor
+* `static` vs instance methods/properties
+* private (`#`) vs public methods/properties
+* `extends` and `instanceof`
+* `super`
+* UML Diagram / Relationship Mapping
+
+### Encapsulation with Closures & Factory Functions
+
+A **closure** in JavaScript is a feature where an inner function has access to variables defined in its outer (enclosing) function, even after that outer function has finished executing. This allows the inner function to "remember" and interact with the environment in which it was created, letting you preserve private state between function calls.
+
+A **factory function** is a function that returns a new object each time it's called, often using closure to encapsulate private variables and methods that can't be accessed from outside the function. When a factory function defines internal variables and returns an object with methods that reference those variables, those methods form closures—giving the created objects their own encapsulated, persistent state.
+
+**Investigation Questions:** 
+
+Note: "IO" is short for "input / output" and is a common acronym used to describe functionality related to reading data from or writing data to external sources such as files or the command line. In this case, we use it to read from and write to the `gameHistory.json` file.
+
+Look into the `utils/makeFileIO.js` file and examine how it's used in `index.js`:
+
+1. In `makeFileIO.js`, the `filePath` parameter is passed to the `makeFileIO` function. Trace through the code: where is `filePath` used inside the returned object? Even though `makeFileIO` finishes executing and returns, how can the `read()` and `write()` methods still access the `filePath` variable? Explain how closure makes this possible.
+
+2. Look at how `makeFileIO` is used in `index.js` (line 22). The function is called with a file path, and the returned object is stored in `gameHistoryIO`. What would happen if you called `makeFileIO` multiple times with different file paths? Would each returned object have its own separate `filePath`? Why or why not? Come up with an imagined example with two different file IO objects to illustrate your answer.
+
+3. The `filePath` variable is not directly accessible from outside the returned object. Try to explain: if you created a `gameHistoryIO` object using `makeFileIO`, could you directly access or modify the `filePath` value from outside? Why is this beneficial? How does this demonstrate encapsulation?
+
+4. Compare the factory function pattern in `makeFileIO.js` to how you might implement this with a class. If you were to convert `makeFileIO` to a class, what would the constructor look like? What would be the equivalent of the `filePath` parameter? Why might a factory function be more appropriate here than a class? Consider: does this functionality need to maintain state between method calls?
+
+5. Look at the `read()` and `write()` methods in the returned object. Both methods reference the `filePath` variable that was captured in the closure. If you were to modify the code to add a new method called `getPath()` that returns the `filePath`, would this break encapsulation? Why or why not? What if you added a method `setPath(newPath)` that allows changing the file path? How would this affect the encapsulation of the `filePath` variable?
+
+### Encapsulation with Classes
+
+Encapsulation with classes is an object-oriented programming concept where data (properties) and behavior (methods) are bundled together within a class. It restricts direct access to some of an object's components, typically by using private fields (using `#` in JavaScript) and providing public methods to interact with that data. This ensures that the internal state of an object can only be changed in controlled ways. Encapsulation provides improved code safety as well as easier maintenance and refactoring.
+
+**Investigation Questions:** 
+
+Examine the `Game.js` file:
+
+1. Look at the `GameHistory` class and identify the private static property `#gameHistory` (line 40). Notice the `#` symbol—this makes it private. Try to access it directly from outside the class (e.g., `Game.#gameHistory`). What happens? Now look at the public static method `getGameHistory()` (lines 42-46). How does this method provide controlled access to the private `#gameHistory`? Why do you think the method returns a deep copy (`structuredClone`) instead of the array directly? Why would `[...GameHistory.#gameHistory]` not be sufficient to make a copy?
+
+2. Examine the `setGameHistory()` method (lines 196-202). This is a public static method that allows setting the `#gameHistory` array, but notice it includes validation (checking if the input is an array). How does this demonstrate encapsulation? What could go wrong if `#gameHistory` were public and could be modified directly without validation? Give a specific example of how the validation protects the internal state.
+
+3. Compare the static methods and properties in the `Game` class to the instance methods and properties. Look at methods like `printCharacterStats()` (static) versus `runGame()` (instance). What's the difference between calling `Game.printCharacterStats()` and `game.runGame()`? Why are some methods static (belonging to the class) while others are instance methods (belonging to each game object)? How does this relate to encapsulation—what data does each type of method need to access?
+
+4. Look at the `Character` class in `characters/Character.js`. All the properties defined in the constructor (lines 63-70) are public. If you wanted to make a character's `health` property private in the `Character` class, what would you need to change? How would you need to modify the `restoreHealth()` method? What other methods in the `Character` class directly access `this.health`, and how would they need to change? Explain why making `health` private would improve encapsulation and prevent potential bugs (e.g., what if someone accidentally set `character.health = -100`?).
+
+### Inheritance
+
+Inheritance is an object-oriented programming (OOP) concept where a new class (the **subclass**) automatically acquires the properties and methods of another class (the **superclass**). This promotes code reuse, allows programmers to build upon existing functionality, and enables logical relationships between types. By using inheritance, programmers can write less repetitive code, make their code more modular and maintainable, and easily extend or specialize functionality in future subclasses.
+
+**Investigation Questions:** 
+Take a look at the `characters/` directory and look at the `Character.js` class. Then, look at the classes defined in `Heroes.js` and `Enemies.js`. 
+
+1. Examine the constructor of the `Mage` class in `Heroes.js`. What does the `super()` call do, and what arguments are being passed to it? Compare this to the `Character` class constructor. Why is it necessary to call `super()` before any other code in the subclass constructor?
+
+2. In the `Character.js` class, identify all the instance methods and properties that are defined. Now look at the `Warrior` class in `Heroes.js`. Which methods and properties from `Character` can a `Warrior` instance access? Give at least three examples of inherited methods that `Warrior` can use.
+
+3. Examine the `printDescription()` method in the `Archer` class. It calls `super.printDescription()` before adding its own console.log statement. What would happen if you removed the `super.printDescription()` call? What would the output be? Explain why using `super` here is important for maintaining the base class functionality.
+
+### Polymorphism
+
+Polymorphism is an object-oriented programming concept where objects of different classes can be treated as if they are instances of the same superclass because they share a common interface (the same method names). In practice, it means that you can invoke the same method (for example, `.buff()` or `.printDescription()`) on different objects, and each object will respond in its own class-specific way.
+
+**Benefits to programmers:**
+- Makes code more flexible and extensible, because you can write general code that works with a wide range of object types.
+- Reduces the amount of repetitive or duplicated code, since the same interface can be reused across subclasses.
+- Enhances maintainability, since changes to functionality can be made in one place (the superclass or a specific subclass) without altering code that depends on the polymorphic interface.
+
+**Investigation Questions:** 
+Take a look at the `characters/` directory and examine the `Game.js` file.
+
+1. Look at the `printCharacterStats()` method in `Game.js` (lines 78-88). This method creates arrays containing different character types (`Mage`, `Warrior`, `Archer`, `Goblin`, `Orc`, `Dragon`) and then calls `printDescription()` on each one. Explain how polymorphism makes this possible. What would happen if each character class didn't have a `printDescription()` method? What would happen if some classes had the method and others didn't?
+
+2. Examine the `resolveActions()` method in `Game.js` (lines 208-220). Notice that it calls `this.player.buff()` and `this.enemy.buff()` without knowing the specific subclass type. Look at the `buff()` method implementations in `Mage`, `Warrior`, `Archer`, `Goblin`, `Orc`, and `Dragon`. How does polymorphism ensure that the correct `buff()` method is called for each character? What would the output be if you called `buff()` on a `Mage` versus a `Dragon`? How is this different from the base `Character.buff()` method?
+
+3. In the `Character.js` class, the `buff()` method (lines 118-121) contains a placeholder implementation that just logs a message. Why do you think the base class has this placeholder method instead of leaving it undefined? How does this design choice relate to polymorphism? What would happen if you tried to call `buff()` on a `Character` instance directly (not a subclass)?
+
+4. Look at the `displayBattleStatus()` method in `Game.js` (lines 188-192). It calls `printStatus()` on both `this.player` and `this.enemy`. However, `printStatus()` is not overridden in any of the subclasses—it's only defined in the `Character` class. Is this still an example of polymorphism? Why or why not? How does this differ from the polymorphic behavior you see with `buff()` or `printDescription()`?
+
+5. Consider the `enemies` array in the `Game` constructor (line 118). It contains instances of `Goblin`, `Orc`, and `Dragon`. Later in the code, `this.enemy` is assigned from this array (line 179). Throughout the `Game` class, methods like `setAction()`, `attack()`, `defend()`, and `buff()` are called on `this.enemy` without checking its specific type. Explain how polymorphism allows this to work. If you wanted to add a new enemy type (e.g., `Troll`), what would you need to do to make it work seamlessly with the existing `Game` code? What would break if `Troll` didn't extend `Character`?
