@@ -1,9 +1,23 @@
+// Import Game so I can verify that new games added to the gameHistory are instances of Game.
 const Game = require("./Game");
+
+// Import these to help with file input/output.
 const path = require('node:path');
 const { readFromFile, writeToFile } = require('./utils/fileIO');
+
+// Path to the gameHistory.json file.
 const PATH_TO_GAME_HISTORY = path.join(__dirname, './data/gameHistory.json');
 
-// Factory Function that manages a gameHistory and input/output with the gameHistory.json file.
+/* 
+makeGameHistoryManagerFactory is a Factory Function
+It returns an object that manages a gameHistory array
+It has the following methods:
+- addGame(gameInstance) - adds a game instance to the gameHistory array
+- printGameHistory() - prints the gameHistory array to the console
+- saveGameHistory() - saves the gameHistory array to the gameHistory.json file
+
+It uses a closure to keep the gameHistory array private.
+*/
 const makeGameHistoryManager = () => {
   // Check to see if there is a saved history in the gameHistory.json file
   const savedHistory = readFromFile(PATH_TO_GAME_HISTORY);
