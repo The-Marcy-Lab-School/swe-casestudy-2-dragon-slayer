@@ -152,22 +152,20 @@ class Game {
   static printHowToPlay() {
     const instructions = `How to Play:
 You are on a quest to slay the dragon, but a few enemies stand in your way.
-Choose between Mage, Warrior, or Archer to start your journey.
-Each hero has unique attack, defense, and buff (power up) abilities.
 
-Attack: Deals damage to the enemy.
-Defend: Reduces damage taken from the enemy.
-Buff: Power up your attack, defense, or health.
+Choose a hero (Mage, Warrior, or Archer) and battle through three levels:
+1. Level 1: Fight a Goblin (a fairly easy win)
+2. Level 2: Fight an Orc (you should win most of the time)
+3. Level 3: Fight the Dragon (a real challenge!)
 
-Attacking damage is calculated as follows:
-• If the opponent is defending, the damage dealt is equal to the attacker's attack strength minus double the defender's defense strength. If all damage is blocked, the defender will counter attack for half of their attack strength.
-• If the opponent is attacking, the damage dealt is equal to the attacker's attack strength minus the defender's defense strength.
-• If the opponent is buffing, the damage dealt is equal to the attacker's attack strength multiplied by 2. They take a critical hit!
+Each turn, choose your action:
+- Attack: Deal damage to the enemy.
+- Defend: Double your defense and counterattack if all damage is blocked.
+- Buff: Power up your character (increases attack, defense, or health). You will be vulnerable and take double damage if attacked.
 
-Tips:
-• Enemies are strong, but they choose their actions randomly and state their actions before you make your choice. So, choose your action wisely to defeat them!
-• Buffing will increase your attack, defense, or health. Be careful — you are at your most vulnerable when you buff.
-• Buffs are maintained between battles. Health is restored between battles.`;
+Your enemies are powerful, but they choose their actions randomly and announce their choice before you act. If you want to win you must be strategic with your choices! 
+
+Tip: Health is restored between levels, but buffs persist.`;
     console.log(instructions);
   }
 }

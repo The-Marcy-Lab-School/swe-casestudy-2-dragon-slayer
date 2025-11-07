@@ -34,32 +34,6 @@ const COUNTER_ATTACK_MULTIPLIER = 0.5;
 class Character {
   static validActions = ["attack", "defend", "buff"];
 
-  static isValidAction(action) {
-    return Character.validActions.includes(action);
-  }
-
-  static getRandomAction() {
-    return Character.validActions[Math.floor(Math.random() * Character.validActions.length)];
-  }
-
-  static calculateDamage(attacker, defender) {
-    let damageDealt;
-
-    switch (defender.action) {
-      case "buff":
-        damageDealt = attacker.attackStrength * CRITICAL_HIT_MULTIPLIER;
-        break;
-      case "attack":
-        damageDealt = Math.max(0, attacker.attackStrength - defender.defenseStrength);
-        break;
-      case "defend":
-        damageDealt = Math.max(0, attacker.attackStrength - defender.defenseStrength * BLOCK_DAMAGE_MULTIPLIER);
-        break;
-    }
-
-    return damageDealt;
-  }
-
   constructor(name, type, attackStrength, defenseStrength, health) {
     this.name = name;
     this.type = type;
@@ -132,6 +106,32 @@ class Character {
     console.log(`- Health: ${this.health}`);
     console.log(`- Attack Strength: ${this.attackStrength}`);
     console.log(`- Defense Strength: ${this.defenseStrength}`);
+  }
+
+  static isValidAction(action) {
+    return Character.validActions.includes(action);
+  }
+
+  static getRandomAction() {
+    return Character.validActions[Math.floor(Math.random() * Character.validActions.length)];
+  }
+
+  static calculateDamage(attacker, defender) {
+    let damageDealt;
+
+    switch (defender.action) {
+      case "buff":
+        damageDealt = attacker.attackStrength * CRITICAL_HIT_MULTIPLIER;
+        break;
+      case "attack":
+        damageDealt = Math.max(0, attacker.attackStrength - defender.defenseStrength);
+        break;
+      case "defend":
+        damageDealt = Math.max(0, attacker.attackStrength - defender.defenseStrength * BLOCK_DAMAGE_MULTIPLIER);
+        break;
+    }
+
+    return damageDealt;
   }
 }
 

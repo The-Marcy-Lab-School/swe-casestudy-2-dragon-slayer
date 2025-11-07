@@ -15,6 +15,7 @@ class Goblin extends Character {
 
     return { attackIncrease };
   }
+
   printDescription() {
     super.printDescription();
     console.log(`- Buff: "+${Goblin.attackBuff} Attack"`);
@@ -28,6 +29,7 @@ class Orc extends Character {
   constructor() {
     super("Orcus", "Orc", 18, 14, 80);
   }
+
   buff() {
     const defenseIncrease = Orc.defenseBuff;
     const attackIncrease = Orc.attackBuff;
@@ -38,6 +40,7 @@ class Orc extends Character {
 
     return { defenseIncrease, attackIncrease };
   }
+
   printDescription() {
     super.printDescription();
     console.log(`- Buff: "+${Orc.defenseBuff} Defense, +${Orc.attackBuff} Attack"`);
@@ -52,6 +55,7 @@ class Dragon extends Character {
   constructor() {
     super("Pyro", "Dragon", 24, 18, 100);
   }
+
   buff() {
     const healthIncrease = Dragon.healthBuff;
     const attackIncrease = Dragon.attackBuff;
@@ -64,6 +68,7 @@ class Dragon extends Character {
 
     return { healthIncrease, attackIncrease, defenseIncrease };
   }
+
   printDescription() {
     super.printDescription();
     console.log(`- Buff: "+${Dragon.healthBuff} Health, +${Dragon.attackBuff} Attack, +${Dragon.defenseBuff} Defense"`);
