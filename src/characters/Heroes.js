@@ -1,6 +1,5 @@
 const Character = require('./Character');
 
-
 class Mage extends Character {
   static attackBuff = 7;
   static healthBuff = 7;

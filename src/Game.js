@@ -35,8 +35,6 @@ class Game {
     this.level = 1;
     this.achievedVictory = false;
     this.enemies = [new Goblin(), new Orc(), new Dragon()];
-
-    GameHistory.addGame(this);
   }
 
   runGame() {
@@ -174,57 +172,4 @@ Tips:
   }
 }
 
-/**
- * GameHistory class that manages the game history
- * 
- * Static Properties:
- * - #gameHistory: Private array storing the history of all games played
- * 
- * Static Methods:
- * - getGameHistory: Public method to get a deep copy of the game history array
- * - setGameHistory: Public method to set the game history array
- * - printGameHistory: Public method to print the game history to console
- * - addGame: Public method to add a new game to the game history
- */
-class GameHistory {
-  static #gameHistory = [];
-
-  static getGameHistory() {
-    return structuredClone(GameHistory.#gameHistory);
-  }
-
-  static setGameHistory(newGameHistory) {
-    if (!newGameHistory || !(newGameHistory instanceof Array)) {
-      console.log("Invalid game history. Please provide an array.");
-      return;
-    }
-    GameHistory.#gameHistory = newGameHistory;
-  }
-
-  static printGameHistory() {
-    console.clear();
-
-    const gameHistory = GameHistory.#gameHistory;
-
-    if (!gameHistory.length) {
-      console.log("No games have been played yet.");
-      return;
-    }
-
-    console.log("Game History:");
-    gameHistory.forEach(game => {
-      const { playerName, achievedVictory, level, player, enemy } = game;
-      if (achievedVictory) {
-        console.log(`• ${playerName}, the ${player.type} slayed the dragon with ${player.health} health remaining.`);
-      } else {
-        console.log(`• ${playerName}, the ${player.type} was defeated by ${enemy.name}, the ${enemy.type} on level ${level}.`);
-      }
-    });
-  }
-
-  static addGame(gameInstance) {
-    GameHistory.#gameHistory.push(gameInstance);
-  }
-}
-
-module.exports = { Game, GameHistory };
+module.exports = Game;
