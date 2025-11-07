@@ -5,9 +5,12 @@
 - [Project Overview](#project-overview)
 - [Directory Structure](#directory-structure)
 - [Purpose of Key Files](#purpose-of-key-files)
+- [Learning Objectives](#learning-objectives)
+- [Gameplay Overview](#gameplay-overview)
 - [Setup \& Running Instructions](#setup--running-instructions)
 - [Class Relationships \& Key Interactions](#class-relationships--key-interactions)
   - [Key Interactions](#key-interactions)
+- [Additional Resources](#additional-resources)
 
 
 ## Project Overview
@@ -65,6 +68,37 @@ dragon-slayer/
 
 ---
 
+## Learning Objectives
+
+This case study demonstrates the following Mod 2 OOP concepts:
+- **Encapsulation** (with closures via factory functions and with classes)
+- **Inheritance** (Character base class with Hero/Enemy subclasses)
+- **Polymorphism** (shared interfaces with class-specific implementations)
+- **Factory Functions** (makeGameHistoryManager using closures)
+- **Static vs Instance Methods** (Game and Character class methods)
+
+For detailed investigation questions exploring these concepts, see [INVESTIGATION.md](./INVESTIGATION.md).
+
+## Gameplay Overview
+
+You are on a quest to slay the dragon.
+
+Choose a hero (Mage, Warrior, or Archer) and battle through three levels:
+1. **Level 1**: Fight a Goblin (a fairly easy win)
+2. **Level 2**: Fight an Orc (you should win most of the time)
+3. **Level 3**: Fight the Dragon (a real challenge!)
+
+Each turn, choose your action:
+- **Attack**: Deal damage to the enemy.
+- **Defend**: Double your defense and counterattack if all damage is blocked.
+- **Buff**: Power up your character (increases attack, defense, or health). You will be vulnerable and take double damage if attacked.
+
+Your enemies are powerful, but they choose their actions randomly and announce their choice before you act. If you want to win you must be strategic with your choices! 
+
+**Tip**: Health is restored between levels, but buffs persist.
+
+---
+
 ## Setup & Running Instructions
 
 1. **Install Dependencies**
@@ -114,6 +148,15 @@ dragon-slayer/
 - After each session, the new `Game` instance is passed to `gameHistoryManager.addGame`.
 - On exit, history is persisted to `src/data/gameHistory.json`.
 - The core battle loop is orchestrated by the `Game` class, which uses hero/enemy instances and their overridden attack/buff methods (illustrating polymorphism and encapsulation).
+
+---
+
+## Additional Resources
+
+- **Character UML Diagram**: See `img/character-uml.svg` for a visual representation of class relationships
+- **Investigation Guide**: Complete the questions in `INVESTIGATION.md` to deepen your understanding of the OOP patterns used
+
+![The Character superclass is extended by Mage, Archer, Warrior, Goblin, Orc, and Dragon](./img/character-uml-diagram.svg)
 
 ---
 
