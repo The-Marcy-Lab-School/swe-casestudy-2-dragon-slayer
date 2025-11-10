@@ -9,8 +9,10 @@
 - [Gameplay Overview](#gameplay-overview)
 - [Setup \& Running Instructions](#setup--running-instructions)
 - [Class Relationships \& Key Interactions](#class-relationships--key-interactions)
+  - [Characters](#characters)
+  - [Other Classes, Factories, and Utilities](#other-classes-factories-and-utilities)
   - [Key Interactions](#key-interactions)
-- [Additional Resources](#additional-resources)
+  - [Extension / Refactor Opportunities](#extension--refactor-opportunities)
 
 
 ## Project Overview
@@ -34,6 +36,7 @@ dragon-slayer/
 │   └── data/
 │       └── gameHistory.json      # (Generated at runtime) Persists history of games
 ├── README.md                     # This file
+├── INVESTIGATION.md              # Questions to understand OOP concepts implemented in this application
 ├── package.json                  # Node.js dependencies & scripts (if used)
 └── ...                           # (other typical git/node files)
 ```
@@ -120,6 +123,8 @@ Your enemies are powerful, but they choose their actions randomly and announce t
 
 ## Class Relationships & Key Interactions
 
+### Characters
+
 - **Character (Base Class)**  
   All heroes and enemies extend from `Character`, sharing core stats like health, attack, defense, as well as common methods for attacks, buffs, and damage calculation.
 
@@ -129,6 +134,13 @@ Your enemies are powerful, but they choose their actions randomly and announce t
 - **Enemies (Goblin, Orc, Dragon)**  
   Also extend `Character`. They choose actions randomly and scale up in difficulty.
 
+You can see these relationships visually in this Unified Modeling Language (UML) Diagram below:
+
+![The Character superclass is extended by Mage, Archer, Warrior, Goblin, Orc, and Dragon](./img/character-diagram.svg)
+
+Each box represents a single class with the class name listed at the top, properties in the middle, and methods at the bottom. Static properties and methods are underlined.
+
+### Other Classes, Factories, and Utilities
 - **Game**  
   Central coordinator. Handles setup, main game loop, battle execution, progression, and printing instructions/stats. Knows the player and current enemy.
 
@@ -149,14 +161,13 @@ Your enemies are powerful, but they choose their actions randomly and announce t
 - On exit, history is persisted to `src/data/gameHistory.json`.
 - The core battle loop is orchestrated by the `Game` class, which uses hero/enemy instances and their overridden attack/buff methods (illustrating polymorphism and encapsulation).
 
+
 ---
 
-## Additional Resources
+### Extension / Refactor Opportunities
 
-- **Character UML Diagram**: See `img/character-uml.svg` for a visual representation of class relationships
-- **Investigation Guide**: Complete the questions in `INVESTIGATION.md` to deepen your understanding of the OOP patterns used
-
-![The Character superclass is extended by Mage, Archer, Warrior, Goblin, Orc, and Dragon](./img/character-uml-diagram.svg)
+* Refactor the `makeGameHistoryManager` into a `class` declaration. Make sure to keep the `gameHistory` private!
+* Add new characters / enemies. Reflect on how polymorphism makes it easy to do this.
 
 ---
 
