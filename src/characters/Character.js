@@ -8,11 +8,6 @@ const COUNTER_ATTACK_MULTIPLIER = 0.5;
  * Static Properties:
  * - validActions: Array of valid actions
  * 
- * Static Methods:
- * - isValidAction: Static method to check if an action is valid
- * - getRandomAction: Static method to get a random action
- * - printDescription: Static method to print the description of a character
- * 
  * Instance Properties:
  * - name: The name of the character
  * - type: The type of the character
@@ -30,6 +25,11 @@ const COUNTER_ATTACK_MULTIPLIER = 0.5;
  * - defend: Method to defend against an opponent
  * - buff: Method to buff the character
  * - printStatus: Method to print the status of the character
+ * 
+ * Static Methods:
+ * - isValidAction: Static method to check if an action is valid
+ * - getRandomAction: Static method to get a random action
+ * - printDescription: Static method to print the description of a character
  */
 class Character {
   static validActions = ["attack", "defend", "buff"];

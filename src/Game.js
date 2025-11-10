@@ -6,11 +6,8 @@ const prompt = require('prompt-sync')({ sigint: true });
 
 /** 
  * Game class that manages the Dragon Slayer game state and gameplay
-
- * - printCharacterStats: Public method to print character stats for all hero and enemy classes
- * - printHowToPlay: Public method to print the instructions for how to play the game
  * 
- * Instance Properties:
+ * Every Game instance has the following public properties:
  * - player: The player's character
  * - enemy: The enemy's character
  * - playerName: The player's name
@@ -19,13 +16,17 @@ const prompt = require('prompt-sync')({ sigint: true });
  * - enemies: The array of enemies
  * - gameHistoryIO: The input/output object for the game history
  * 
- * Instance Methods:
- * - runGame: Public method to run the game
- * - getCharacterSelection: Public method to get the player's character selection
- * - setLevel: Public method to set the current level
- * - displayBattleStatus: Public method to display the battle status
- * - getPlayerAndEnemyActions: Public method to get the player's and enemy's actions
- * - resolveActions: Public method to resolve the actions
+ * Every Game instance has the following public methods:
+ * - runGame(): run the game
+ * - getCharacterSelection(): get the player's character selection (mage, archer, or warrior)
+ * - setLevel(): set the current level and enemy
+ * - displayBattleStatus(): display the battle status
+ * - getPlayerAndEnemyActions(): get the player's and enemy's actions
+ * - resolveActions(): resolve the actions
+ * 
+ * Game static methods
+ * - printCharacterStats(): print character stats for all hero and enemy classes
+ * - printHowToPlay(): print the instructions for how to play the game
 */
 class Game {
   constructor(playerName) {
@@ -92,8 +93,11 @@ class Game {
   }
 
   setLevel(level) {
+    // Set the level and select the appropriate enemy
     this.level = level;
     this.enemy = this.enemies[this.level - 1];
+
+    // Reset the player's health back to their max health
     this.player.restoreHealth();
 
     // Announce the level and enemy
